@@ -1,0 +1,30 @@
+#include <stdio.h>
+
+void sum_elements(int arr[], int size) {
+    int sum_odd = 0;
+    int sum_even = 0;
+    for (int i = 0; i < size; i++) {
+        if (i % 2 == 0) {
+            sum_even += arr[i];
+        } else {
+            sum_odd += arr[i];
+        }
+    }
+    printf("Sum of elements at even positions: %d\n", sum_even);
+    printf("Sum of elements at odd positions: %d\n", sum_odd);
+}
+
+int main() {
+    int size;
+    printf("Enter the size of the array: ");
+    scanf("%d", &size);
+    
+    int arr[size];
+    printf("Enter the elements of the array: ");
+    for (int i = 0; i < size; i++) {
+        scanf("%d", &arr[i]);
+    }
+    
+    sum_elements(arr, size);
+    return 0;
+}
