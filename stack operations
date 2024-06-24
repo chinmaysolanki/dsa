@@ -1,0 +1,130 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_SIZE 100
+
+struct Stack {
+    int items[MAX_SIZE];
+    int top;
+};
+
+void initialize(struct Stack *stack);
+bool isEmpty(struct Stack *stack);
+bool isFull(struct Stack *stack);
+void push(struct Stack *stack, int item);
+int pop(struct Stack *stack);
+void display(struct Stack *stack);
+int peek(struct Stack *stack);
+
+int main() {
+    struct Stack stack;
+    initialize(&stack);
+    int choice, item;
+
+    while (1) {
+        printf("\nStack Operations Menu:\n");
+        printf("1. Push an element\n");
+        printf("2. Pop an element\n");
+        printf("3. Peek at the top element\n");
+        printf("4. Display the stack\n");
+        printf("5. Check if stack is empty\n");
+        printf("6. Check if stack is full\n");
+        printf("7. Exit\n");
+
+        printf("Enter your choice (1-7): ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter element to push: ");
+                scanf("%d", &item);
+                push(&stack, item);
+                break;
+            case 2:
+                item = pop(&stack);
+                if (item != -1)
+                    printf("Popped element: %d\n", item);
+                break;
+            case 3:
+                item = peek(&stack);
+                if (item != -1)
+                    printf("Top element: %d\n", item);
+                break;
+            case 4:
+                display(&stack);
+                break;
+            case 5:
+                if (isEmpty(&stack))
+                    printf("Stack is empty.\n");
+                else
+                    printf("Stack is not empty.\n");
+                break;
+            case 6:
+                if (isFull(&stack))
+                    printf("Stack is full.\n");
+                else
+                    printf("Stack is not full.\n");
+                break;
+            case 7:
+                printf("Exiting the program.\n");
+                return 0;
+            default:
+                printf("Invalid choice. Please enter a valid choice (1-7).\n");
+        }
+    }
+
+    return 0;
+}
+
+void initialize(struct Stack *stack) {
+    stack->top = -1;
+}
+
+bool isEmpty(struct Stack *stack) {
+    return stack->top == -1;
+}
+
+bool isFull(struct Stack *stack) {
+    return stack->top == MAX_SIZE - 1;
+}
+
+void push(struct Stack *stack, int item) {
+    if (isFull(stack)) {
+        printf("Stack Overflow! Cannot push element.\n");
+    } else {
+        stack->top++;
+        stack->items[stack->top] = item;
+        printf("Pushed %d into the stack.\n", item);
+    }
+}
+
+int pop(struct Stack *stack) {
+    if (isEmpty(stack)) {
+        printf("Stack Underflow! Cannot pop element.\n");
+        return -1;
+    } else {
+        int item = stack->items[stack->top];
+        stack->top--;
+        return item;
+    }
+}
+
+int peek(struct Stack *stack) {
+    if (isEmpty(stack)) {
+        printf("Stack is empty.\n");
+        return -1;
+    } else {
+        return stack->items[stack->top];
+    }
+}
+
+void display(struct Stack *stack) {
+    if (isEmpty(stack)) {
+        printf("Stack is empty.\n");
+    } else {
+        printf("Current stack:\n");
+        for (int i = stack->top; i >= 0; i--) {
+            printf("%d\n", stack->items[i]);
+        }
+    }
+}
